@@ -4,10 +4,14 @@ package com.garcia.proyPortfolio.Jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import java.security.Key;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +19,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class JwtService {
     
-    private static final String SECRET KEY=256bitkeygenerator ;
+    private static final String SECRET_KEY="9cc0e5d1d65cce0841d60cb464f6dbb4da76ff6b1519e94ec2e163187a77c1be";
 
    public String getToken(UserDetails user) {
         return getToken(new HashMap<>(), user);
@@ -35,9 +39,10 @@ public class JwtService {
    }
 
    
-   //min 43
+   
     private Key getKey() {
-        
+        byte[] KeyBytes=Decoders.BASE64.decode(SECRET_KEY);
+        return Keys.hmacShaKeyFor(KeyBytes);
     }
    
    
